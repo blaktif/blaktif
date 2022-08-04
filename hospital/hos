@@ -1,0 +1,560 @@
+#include<iostream>
+#include<conio.h>
+#include<stdlib.h>
+#include<cctype>
+using namespace std;
+
+const int n=100;
+int C=0 , X=0 , Y=0 ,AR[1000];
+int G=0 ,V=0 , B=0,I=0 , N=0;
+int L=0 ,q=0 , AR2[1000] , F=0,T=0,t=0,o=0;
+
+class hos{
+protected:
+	string name;
+	string id;
+	string number;
+	string blood;
+	string gender;	
+	string age;			
+public:
+	void menu();
+	void set_genral();
+	void print_genral();
+	void entr_vaild();
+	void na(string);
+	void d(string);
+	void num(string);
+	void bl();
+	void ge();
+	void ag(string);
+	void set_name();
+	void set_id();
+	void set_num();
+	void set_age();
+	void monitor();
+	void press();
+	void bl_t();
+	void genral();
+	void list_ge();
+	void lung();
+	void set_lung();
+	void print_lung();
+	void list_lung();
+	void hurt();
+	void set_hurt();
+	void print_hurt();
+	void list_hurt();
+	
+};
+	//object for diffrent deprtments 
+	hos obj[n];	
+	//menu
+	void hos::menu(){
+		char a;
+		system("cls"); 
+		cout<<"\t1\tgenreal clinic \n";
+		cout<<"\t2\tlung clinic \n";
+		cout<<"\t3\thurt clinic \n";
+		cout<<"\t4\texit \n";
+		cin>>a;
+		switch(a){
+			case '1':
+				genral(); break;
+			case '2':
+				lung(); break;
+			case '3':
+				hurt(); break;
+			case '4':
+				exit(0);
+			default:
+				entr_vaild();					
+				menu(); break;						
+		}			
+	}
+	void hos::genral(){
+		system("cls"); 
+		cout<<"\t1\t to add pation \n";
+   	cout<<"\t2\t to get pation to doctor\n";
+		cout<<"\t3\t to display list \n";
+		cout<<"\t4\t to change department\n";
+		char a;
+		cin>>a;
+		switch(a){
+			case '1':
+				set_genral();
+				genral(); break;
+			case '2':
+				print_genral(); 	
+				genral(); break;
+			case '3':
+				list_ge(); press();
+				genral(); break;	
+			case '4':
+				menu(); system("cls"); 
+				break;
+			default:
+				entr_vaild();					
+				genral(); break;						
+		}			
+	} 
+	
+	
+	void hos::lung(){
+		system("cls"); 
+		cout<<"\t1\t to add pation \n";
+   	cout<<"\t2\t to get pation to doctor\n";
+		cout<<"\t3\t to display list \n";
+		cout<<"\t4\t to change department\n";
+		char a;
+		cin>>a;
+		switch(a){
+			case '1':
+				set_lung();
+				lung(); break;
+			case '2':
+				print_lung(); 	
+				lung(); break;
+			case '3':
+				list_lung(); press();
+				lung(); break;	
+			case '4':
+				menu(); system("cls"); 
+				break;
+	    	default:
+				entr_vaild();					
+				lung(); break;						
+		}			
+	}
+	
+	void hos::hurt(){
+		system("cls"); 
+		cout<<"\t1\t to add pation \n";
+   	cout<<"\t2\t to get pation to doctor\n";
+		cout<<"\t3\t to display list \n";
+		cout<<"\t4\t to change department\n";
+		char a;
+		cin>>a;
+		switch(a){
+			case '1':
+				set_hurt();
+				hurt(); break;
+			case '2':
+				print_hurt(); 	
+				hurt(); break;
+			case '3':
+				list_hurt(); press();
+				hurt(); break;	
+			case '4':
+				menu(); system("cls"); 
+				break;
+	    	default:
+				entr_vaild();					
+				hurt(); break;						
+		}			
+	}
+	
+	void hos::set_hurt(){
+		L=1;	
+		set_genral(); 	
+	}
+	
+	void hos::set_lung(){
+		 B=1;	
+		set_genral(); 	
+	}
+	
+	//to read information for pation 
+	void hos::set_genral(){
+		string a , b ,c , m , n ,s;
+		monitor();
+			cout<<"entr name :";
+			cin>>a;
+			na(a); 
+			cout<<"entr id :";
+			cin>>b;
+			d(b);
+			cout<<"entr number :";
+			cin>>c;
+			num(c);	
+			ge();// to determine gender 
+			bl(); // to determine blood faction
+			cout<<"entr your age : \n";
+			cin>>m;
+			ag(m);
+			cout<<"succesfull add \n";
+	  cout<<"press any key to continue\n";	
+			getch();
+			cin.ignore(1000,'\n');
+			monitor();		
+		 if(B==1){
+			AR[V++]=C;
+			B=0; I++; G++; N++;
+		}
+		if(L==1){
+			AR2[T++]=C;
+			L=0; q++; F++;
+		}
+		C++; Y++;
+	}
+	
+	//to get pation to doctor 
+	void hos::print_genral(){
+		int y=0;
+		if(G==0&&q==0){
+			cout<<"\tget pation to doctor\n\n";
+			for(int i=X;i<Y;i++){
+				cout<<"name is :";
+				cout<<obj[i].name<<endl;
+				cout<<"id is :";
+				cout<<obj[i].id<<endl;
+				cout<<"number is :";
+				cout<<obj[i].number<<endl;
+				cout<<"gender is :";
+				cout<<obj[i].gender<<endl;
+				cout<<"blood type is :";
+				cout<<obj[i].blood<<endl;
+				cout<<"age is :";
+				cout<<obj[i].age<<endl;		
+				X++; y++;
+			}
+		}
+		if(y==0){
+			cout<<"no pation \n";
+		}
+		press();
+		monitor(); 
+	}
+	
+	void hos::print_lung(){
+		int y=0;
+		cout<<"\tget pation to doctor\n\n";
+		for(int i=o;i<N;i++){
+			i=AR[i];
+			cout<<"name is :";
+			cout<<obj[i].name<<endl;
+			cout<<"id is :";
+			cout<<obj[i].id<<endl;
+			cout<<"number is :";
+			cout<<obj[i].number<<endl;
+			cout<<"gender is :";
+			cout<<obj[i].gender<<endl;
+			cout<<"blood type is :";
+			cout<<obj[i].blood<<endl;
+			cout<<"age is :";
+			cout<<obj[i].age<<endl;	
+			y=1; o++;
+		}
+		if(y==0){
+			cout<<"no pation \n";
+		}
+		press();
+		monitor(); 
+	}
+	
+	void hos::print_hurt(){
+	int y=0;
+		cout<<"\tget pation to doctor\n\n";
+		for(int i=t;i<F;i++){
+			i=AR2[i];
+			cout<<"name is :";
+			cout<<obj[i].name<<endl;
+			cout<<"id is :";
+			cout<<obj[i].id<<endl;
+			cout<<"number is :";
+			cout<<obj[i].number<<endl;
+			cout<<"gender is :";
+			cout<<obj[i].gender<<endl;
+			cout<<"blood type is :";
+			cout<<obj[i].blood<<endl;
+			cout<<"age is :";
+			cout<<obj[i].age<<endl;	
+			y=1; t++;
+		}
+		if(y==0){
+			cout<<"no pation \n";
+		}
+		press();
+		monitor(); 
+	}
+	
+	void hos::list_hurt(){
+		int y=0;
+		cout<<"\tinformation the pations\n";
+		for(int i=0;i<q;i++){
+			i=AR2[i];
+			cout<<"name is :";
+			cout<<obj[i].name<<endl;
+			cout<<"id is :";
+			cout<<obj[i].id<<endl;
+			cout<<"number is :";
+			cout<<obj[i].number<<endl;
+			cout<<"gender is :";
+			cout<<obj[i].gender<<endl;
+			cout<<"blood type is :";
+			cout<<obj[i].blood<<endl;
+			cout<<"age is :";
+			cout<<obj[i].age<<endl;		
+			y=1;
+		}
+		if(y==0){
+			cout<<"information not excict \n";
+		}
+	}
+	
+	void hos::list_lung(){
+		int y=0 , t=0;
+		cout<<"\tinformation the pations\n";
+		for(int i=t;i<G;i++){
+			i=AR[i];
+			cout<<"name is :";
+			cout<<obj[i].name<<endl;
+			cout<<"id is :";
+			cout<<obj[i].id<<endl;
+			cout<<"number is :";
+			cout<<obj[i].number<<endl;
+			cout<<"gender is :";
+			cout<<obj[i].gender<<endl;
+			cout<<"blood type is :";
+			cout<<obj[i].blood<<endl;
+			cout<<"age is :";
+			cout<<obj[i].age<<endl;		
+			y=1; t++;
+		}
+		if(y==0){
+			cout<<"information not excict \n";
+		}
+	}
+	
+	void hos::list_ge(){
+		int y=0;
+		if(G==0&&q==0){
+		cout<<"\tinformation the pations\n";
+			for(int i=0;i<C;i++){
+				cout<<"name is :";
+				cout<<obj[i].name<<endl;
+				cout<<"id is :";
+				cout<<obj[i].id<<endl;
+				cout<<"number is :";
+				cout<<obj[i].number<<endl;
+				cout<<"gender is :";
+				cout<<obj[i].gender<<endl;
+				cout<<"blood type is :";
+				cout<<obj[i].blood<<endl;
+				cout<<"age is :";
+				cout<<obj[i].age<<endl;		
+				y=1;
+			}
+		}
+		if(y==0){
+			cout<<"information not excict \n";
+		}
+	}
+	
+	void hos::press(){	  
+	  cout<<"press any key \n";	  
+		getch();
+		cin.ignore(1000,'\n');			
+	}		
+	//if entr is wrong 
+	void hos::entr_vaild(){
+		cout<<"entr vaild option \n";
+    	press();
+		system("cls");			
+	}
+	
+	//to delete the monitor
+	void hos::monitor(){
+		system("cls");					
+	}
+	
+	//here place fuction to incapcoltion
+	//chek if name is creat from char
+	void hos::na(string x){
+		int i , c=0;		
+		for(i=0;i<x.size();i++){
+			x[i]=toupper(x[i]);
+			if(x[i]>='A'&&x[i]<='Z'){}
+			else c++;		
+			}
+			if(c!=0){
+		 set_name();		 	
+		}
+		else{
+			obj[C].name=x;			
+		}					
+	}
+	
+	//to set name again if input  wrong
+	void hos::set_name(){
+		string x;
+		cout<<"name must be letters : \n ";
+  	cout<<"press any key to continue\n";	
+		getch();
+		cin.ignore(1000,'\n');	
+		system("cls");
+		cout<<"entr name : ";
+		getline(cin,x);						
+		na(x);	
+	}
+	//chek if id is creat from digit
+	void hos::d(string x){
+			int i , c=0;
+		for(i=0;i<x.size();i++){
+			x[i]=toupper(x[i]);
+			if(x[i]>='0'&&x[i]<='9'){}
+			else c++;		
+			}
+			if(c!=0){
+			 set_id();		 	
+			}
+		else{
+			obj[C].id=x;			
+		}					
+	}
+	//to set id again if input  wrong
+	void hos::set_id(){
+		string x;
+		cout<<"id must be digit : \n ";
+  	cout<<"press any key to continue\n";	
+		getch();	
+		cin.ignore(1000,'\n');				
+		system("cls");
+		cout<<"id : ";
+		getline(cin,x);		
+		d(x);	
+	}
+	//chek if number is creat from digit
+	void hos::num(string x){
+			int i , c=0;
+		for(i=0;i<x.size();i++){
+			x[i]=toupper(x[i]);
+			if(x[i]>='0'&&x[i]<='9'){}
+			else c++;		
+			}
+			if(c!=0){
+			 set_num();		 	
+			}
+		else{
+			obj[C].number=x;			
+		}					
+	}
+	//to set name again if input  wrong
+	void hos::set_num(){
+		string x;
+		cout<<"number must be digit : \n ";
+  	cout<<"press any key to continue\n";	
+		getch();	
+		cin.ignore(1000,'\n');		
+		system("cls");	
+		cout<<"number :";	
+		getline(cin,x);	
+		num(x);	
+	}
+	//here look up you need to declation 
+	//function about blood & age & gender
+	
+	
+	//to choise the Gender (f/m)
+	void hos::ge(){
+		char x;
+		cout<<"choise gender(f/m) :\n";
+		cout<<"1\t to gender f \n";
+		cout<<"2\t to gender m \n";
+		cin>>x;
+		if(x=='1'){
+			obj[C].gender='f';
+			system("cls");
+		}
+		else if(x=='2'){
+			obj[C].gender='m';
+			system("cls");
+		}		
+		else{
+			cout<<"choise from the list \n";
+			press();
+			system("cls");
+			ge();
+		}
+	}
+	//to chek if age is digit
+	void hos::ag(string x){
+			int i , c=0;
+		for(i=0;i<x.size();i++){
+			x[i]=toupper(x[i]);
+			if(x[i]>='0'&&x[i]<='9'){}
+			else c++;		
+			}
+			if(c!=0){
+			 set_age();		 	
+			}
+		else{
+			obj[C].age=x;			
+		}					
+	}
+	//to set age again if input  wrong
+	void hos::set_age(){
+		string x;
+		cout<<"age must be digit : \n ";
+  	cout<<"press any key to continue\n";	
+		getch();
+		cin.ignore(1000,'\n');				
+		system("cls");
+		cout<<"age : ";	
+		getline(cin,x);	
+		ag(x);	
+	}
+	
+	void hos::bl(){
+		char x, y;
+		cout<<"\tblood type : \n";
+		cout<<"choise from the list :\n";
+		cout<<"1\t to A faction \n";
+		cout<<"2\t to B faction \n";
+		cout<<"3\t to O faction \n";
+		cout<<"4\t to AB faction \n";
+		cin>>x;
+		switch(x){
+			case '1':
+				obj[C].blood='A';  bl_t();
+				 break;
+			case '2':
+				obj[C].blood='B'; bl_t();
+				break;
+			case '3':
+				obj[C].blood='O';  bl_t();
+				break;
+			case '4':
+				obj[C].blood='AB';  bl_t();
+				break;
+			default:
+			 press();  system("cls"); 
+			 bl(); break;			
+		}
+	}
+	void hos::bl_t(){
+		char y;
+	cout<<"choice type the faction blood\n";
+		cout<<"1\t to (+) \n";
+		cout<<"2\t to (-) \n";
+		cin>>y;
+		if(y=='1'){
+			obj[C].blood+='+';
+		}
+		else if(y=='2'){
+			obj[C].blood+='-';
+		}
+		else{
+			cout<<"choise from the list \n";
+			press();
+			system("cls");
+			bl_t();
+		}
+	}
+	
+int main()
+{		
+	hos obj;
+	obj.menu();
+	
+}
