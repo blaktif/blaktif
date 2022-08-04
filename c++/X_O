@@ -1,0 +1,167 @@
+#include<iostream>
+#include<stdlib.h>
+#include<conio.h>
+using namespace std;
+
+int player=1 , x=0;
+
+class X_O{
+private:
+char sq[10]={'1','2','3','4','5','6','7','8','9'};
+public:
+	void board();
+	void pl();
+	void fee();
+	void The_game();
+	void chek_winer();
+	void winer();
+	void want();
+	void emp();
+	
+};
+	//players 
+	void X_O::pl(){
+		cout<<"  player_1-> X    ";
+		cout<<"  player_2-> O\n";
+	}
+	
+	//draw the board 
+	void X_O::fee(){
+	cout<<"\t";	cout<<"\t|     |"<<endl;
+cout<<"\t";	cout<<"     "<<sq[0]<<"  |"<<"  "<<sq[1]<<"  |"<<"  "<<sq[2]<<endl;
+cout<<"\t";	cout<<"   _____|"<<"_____|"<<"_____"<<endl;
+cout<<"\t";	cout<<"\t|     |"<<endl;
+cout<<"\t";	cout<<"     "<<sq[3]<<"  |"<<"  "<<sq[4]<<"  |"<<"  "<<sq[5]<<endl;
+cout<<"\t";	cout<<"   _____|_____|_____"<<endl;
+cout<<"\t";	cout<<"\t|     |\n";
+cout<<"\t";	cout<<"    "<<sq[6]<<"   |  "<<sq[7]<<"  |"<<"  "<<sq[8]<<endl;
+cout<<"\t";	cout<<"\t|     |";
+	
+	}
+	
+	void X_O::board(){
+		char ch , choice;
+		ch=(player%2!=0)?'X':'O';
+		x=(player%2!=0)?1:2;
+		cout<<"\n\n player_"<<x<<"\n\n";
+		cout<<"entr place :";
+		cin>>choice;
+		if(choice=='1'&&sq[0]=='1'){
+			sq[0]=ch;
+		}
+	else if(choice=='2'&&sq[1]=='2'){
+			sq[1]=ch;
+		}
+	else if(choice=='3'&&sq[2]=='3'){
+			sq[2]=ch;
+		}
+	else if(choice=='4'&&sq[3]=='4'){
+			sq[3]=ch;
+		}
+	else if(choice=='5'&&sq[4]=='5'){
+			sq[4]=ch;
+		}
+	else if(choice=='6'&&sq[5]=='6'){
+			sq[5]=ch;
+		}
+	else if(choice=='7'&&sq[6]=='7'){
+			sq[6]=ch;
+		}
+	else if(choice=='8'&&sq[7]=='8'){
+			sq[7]=ch;
+		}
+	else if(choice=='9'&&sq[8]=='9'){
+			sq[8]=ch;
+		}
+	else{
+		cout<<"  invaild move :\n";
+		cout<<"  press any key to continue\n";
+		cin.ignore(1000,'\n');
+		getch();
+		system("cls");		
+		The_game();
+	}	
+		player++;					
+	}
+	
+	//to chek who is win in the game
+	void X_O::chek_winer(){
+		if(sq[0]==sq[1]&&sq[1]==sq[2]){
+			winer(); fee(); want();
+		}
+		else if(sq[3]==sq[4]&&sq[4]==sq[5]){
+			winer(); fee(); want();
+		}
+		else if(sq[6]==sq[7]&&sq[7]==sq[8]){
+			winer(); fee(); want();
+		}
+		else if(sq[0]==sq[3]&&sq[3]==sq[6]){
+			winer(); fee(); want();
+		}
+		else if(sq[1]==sq[4]&&sq[4]==sq[7]){
+			winer(); fee(); want();
+		}
+		else if(sq[2]==sq[5]&&sq[5]==sq[8]){
+			winer(); fee(); want();
+		}
+	else if(sq[0]==sq[4]&&sq[4]==sq[8]){
+			winer(); fee(); want();
+		}
+		else if(sq[2]==sq[4]&&sq[4]==sq[6]){
+			winer(); fee(); want();
+		}
+		else if(sq[0]!='1'&&sq[1]!='2'&&sq[2]!='3'&&sq[3]!='4'&&sq[4]!='5'&&sq[5]!='6'&&sq[6]!='7'&&sq[7]!='8'&&sq[8]!='9'){
+			cout<<"it is Draw : \n";
+			fee(); want();		
+		}			
+	}
+	
+	//fun winer 
+	void X_O::winer(){
+		system("cls");
+		pl();
+		cout<<endl;
+		cout<<"\nThe winer is player :"<<x<<"\n";
+	}
+	//write draw your self will write this
+	
+	void X_O::want(){
+		char a;
+		cout<<"\n1\t to strat a new game \n";
+		cout<<"2\t to exit \n";
+		cin>>a;
+		if(a=='1'){
+			emp(); system("cls"); The_game();
+		}
+		else if(a=='2'){
+			exit(0);
+		}
+		else{
+			pl(); fee();
+		cout<<"  invaild option :\n";
+  	cout<<"  press any key to continue\n";
+		cin.ignore(1000,'\n');
+		getch();
+		system("cls");
+		want();			
+		}	
+	}
+	
+	void X_O::emp(){
+		char ch='1';
+		for(int i=0;i<10;i++){
+			sq[i]=ch++;
+		}			
+	}	
+	
+	void X_O::The_game(){
+		pl(); fee(); board(); chek_winer();
+		system("cls"); The_game();		
+	}
+
+int main(){
+	
+	X_O obj;
+	obj.The_game();
+	
+}
