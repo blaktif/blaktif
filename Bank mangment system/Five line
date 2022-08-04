@@ -1,0 +1,574 @@
+#include <iostream>
+#include<fstream>
+#include<cstdio>
+#include<string>
+#include<cstring>
+
+using namespace std;
+
+string k , o;   //I need this to save name 
+string v[200];   //I need this to edit on file
+int q=0;
+int U=0;
+
+class Bank{
+private:
+	string name;
+	string passWord;
+	int balance=0;
+public:
+	void menu();
+	bool chek_value(int);
+	void creat_acount();
+	bool ch_acount(string);
+	void ad_to(string);
+	void read_name(string,string);
+	void change_ff();
+	string t_R_n_ff();
+	bool ch_pass();
+	string choise_ff();
+	string t_R_p_ff();
+	void edit_ff(string);
+	void o_f(string,int);
+	void p_f(string);
+	void re(string);
+	void to_form(string,string);
+	void to_form2(string);
+	int ch_n(); // choice what need to edit
+	void  deposit();
+	void for_balance(int,int);
+	void witdrawal();
+	void delete_ac();
+	void re_m(string);
+	void details();
+	void save_NF(string);
+	void re_NF(string,string);
+	void de_NF(string);
+	void read_AD();
+	void ch_admin_pass();
+	void creat_admin();
+	bool admin_pass();
+};
+	// to chek if the value of balance is int
+	bool Bank::chek_value(int z){
+		if(z>=0){
+			balance=z;
+			return true;	
+		}
+		else
+			cout<<"wrong input \n";	
+			return false;
+	}
+	
+	// to set arguments 
+	void Bank::read_name(string x ,string y){
+		name=x;
+		passWord=y;
+	}
+	
+	// creat acount 
+	void Bank::creat_acount(){
+		string x , y;
+		cout<<"enter name : ";
+		cin>>x;
+		cout<<"enter pass word :";
+		cin>>y;
+		read_name(x,y);
+		if(ch_acount(name))
+			cout<<"acount oready excicts \n";
+		else{
+			ad_to(name);
+			save_NF(name);
+		}
+	}
+	
+	// chek if file is excistic before 
+	bool Bank::ch_acount(string x){
+		ifstream file(x+".txt");
+		if(file)
+			return true;
+			return false;
+	}	
+	// to creat file
+	void Bank::ad_to(string x){
+		string c;
+		ofstream file;
+		file.open(x+".txt");
+		file<<name<<endl;
+		file<<passWord<<endl;
+		c=to_string(balance);
+		file<<c<<endl;	
+		cout<<"acount  is creat \n";	
+		file.close();
+	}
+	
+	// list menu
+	void Bank::menu(){
+		int ch=0 , f;
+		cout<<"1\t to menu user \n";
+		cout<<"2\t to menu admin \n";
+		cin>>f;
+		if(f==1){	
+		cout<<"1\t to creat acount \n";
+		cout<<"2\t to deposit \n";
+		cout<<"3\t to witdrawal \n";
+		cout<<"4\t to change your inform \n";
+		cout<<"5\t to view your details \n";
+		cout<<"6\t to delete your inform \n";
+			cin>>ch;
+			if(ch>0)
+			{
+				switch(ch){
+					case 1:
+						creat_acount(); 
+						menu(); break;
+					case 2:
+						deposit();
+						menu(); break;
+					case 3:
+						witdrawal();
+						menu(); break;	
+					case 4:
+						change_ff();
+						menu(); break;
+					case 5:
+						details();
+						menu(); break;
+					case 6:
+						delete_ac();
+						menu(); break;
+					
+					default:
+						menu(); break;			
+				}
+			}
+			else  cout<<"erorr \n";
+		}
+		if(f==2){
+			cout<<"1\t to creat acount \n";
+			cout<<"2\t to show details \n";
+			cin>>ch;
+			if(ch>0)
+			{
+				switch(ch){
+					case 1:
+						creat_admin(); 
+						menu(); break;
+					case 2:
+						ch_admin_pass();
+						menu(); break;
+					default:
+						menu(); break;			
+				}
+			}
+			else  cout<<"erorr \n";
+		}
+	}
+	
+	
+	// to read name for file to chek
+	string Bank::t_R_n_ff(){
+		string x;
+		cout<<"ent your name plase :";
+		cin>>x;
+		return x;		
+	}
+	
+	//to read pass for file 
+	string Bank::t_R_p_ff(){
+		string x;
+		cout<<"ent your pass plase :";
+		cin>>x;
+		return x;		
+	}
+	
+	// to edit name || pass 
+	void Bank::change_ff(){
+			if(ch_pass()){
+				edit_ff(k);		
+			}
+			else{
+				cout<<"change failed : \n";
+				cout<<"your name || pass wrong";
+				cout<<endl<<endl;
+				}				
+		}
+
+	// to chek pass and name is true
+	bool Bank::ch_pass(){
+		string a=t_R_n_ff();
+		o=a;
+		if(ch_acount((a))){
+			if(t_R_p_ff()==choise_ff()){
+				k=a;
+				return true;
+			}
+			else
+				return false;
+		}
+		else
+			return false;
+	}		
+	
+	// fun to get passWord from file
+	string Bank::choise_ff(){
+		string a=o;
+		int c=1; string x;
+		if(ch_acount((a))){
+			ifstream file(a+".txt");
+			while(!file.eof()){
+				getline(file,x);
+				if(c==2){
+					return x;
+				}
+				c++;
+			}
+		}
+	}
+	
+	// edit on file
+	void Bank::edit_ff(string x){
+		p_f(x);		
+	}
+			
+	//fun to print new edit in file client
+	void Bank::p_f(string x){
+			re(x);								
+	}
+	
+	//fun to change the name || pass word
+	void Bank::re(string x){
+		string y;
+		if(ch_n()==1){
+		cout<<"ent a new Name :";
+		cin>>y;
+		to_form(x,y);
+		k=y;
+		o_f(y,1);
+		}
+		else{
+			cout<<"ent a new pass word :";
+			cin>>y;
+			o_f(y,2);	
+			cout<<"change password passed";
+			cout<<endl;
+		}
+	}
+	
+	//to transfer string to array of char 
+	//this is becuse rename fun		
+	void Bank::to_form(string x , string y){
+		x=x.append(".txt");
+		y=y.append(".txt");
+		re_NF(x,y);
+		//I think is here were I need to
+		//decling a fun to re file admin , y
+		char ch[x.size()+1];
+		char ch2[y.size()+1];
+		for(int i=0;i<strlen(ch)+4;i++){
+			ch[i]=x[i];
+		}
+		for(int i=0;i<strlen(ch2)+4;i++){
+			ch2[i]=y[i];
+		}
+		if(!rename(ch,ch2)){
+			cout<<"succecfuly rename \n";
+		}
+		else
+			cout<<"fiald rename \n";
+	}
+	
+	//open file to read array
+	//fun to edit on file
+	void Bank::o_f(string x,int y){
+		ifstream file(k+".txt");
+		int t=0;
+		while(!file.eof()){
+			getline(file,v[t++]);
+		}
+		if(y==1){
+		v[0]=x;
+		}
+		else if(y==2){
+			v[1]=x;
+		}
+		ofstream file_2;
+		file_2.open(k+".txt");
+		for(int i=0;i<t;i++){
+			file_2<<v[i]<<endl;			
+		}
+		file_2.close();
+	}
+	
+	//choice what you need to edit 
+	int Bank::ch_n(){
+		int x;
+		cout<<"1\t to edit the name \n";
+		cout<<"2\t to edit the pass word \n";
+		cin>>x;
+		if(x==1){
+			return 1;
+		}
+		if(x==2){
+			return 2;
+		}
+		return 0;		
+	}
+	// to deposit money in your acount
+	void Bank::deposit(){
+		int x;
+		if(ch_pass()){
+			cout<<"ent how much deposit :";
+			cin>>x;
+			if(chek_value(x)){
+				for_balance(x,1);
+				cout<<"sucecfull deposit \n";
+			}
+		}
+		else{
+			cout<<"deposit failed : \n";
+			cout<<"your name || pass wrong";
+			cout<<endl<<endl;
+		}
+	}
+	//open file take balanace from file
+	//& + or - balance 
+	void Bank::for_balance(int x,int j){
+		string a , b;
+		int c , d;
+		ifstream file(k+".txt");
+			int t=0;
+			while(!file.eof()){
+				getline(file,v[t++]);
+			}
+			if(j==1){
+				c=stoi(v[2]);
+				c+=x;
+				b=to_string(c);
+				v[2]=b;
+			}
+			else
+			{
+				c=stoi(v[2]);
+				if(c-x>=0){
+					c-=x;
+					b=to_string(c);
+					v[2]=b;					
+				}
+			else{
+			  U=1;
+			  cout<<"you don't have enogh\n";	
+			}
+		}
+		ofstream file_2;
+		file_2.open(k+".txt");
+		for(int i=0;i<t;i++){
+			file_2<<v[i]<<endl;			
+		}
+		file_2.close();
+	}
+	
+	//to witdrawal money from your acount
+	void Bank::witdrawal(){
+		int x;
+		if(ch_pass()){
+			cout<<"ent how much witdrawal :";
+			cin>>x;
+			if(chek_value(x)){
+				for_balance(x,2);
+				if(U==0){
+				cout<<"succecfull witdrawal \n";
+				}			
+			}
+		}
+		else{
+			cout<<"withdrawal failed : \n";
+			cout<<"your name || pass wrong";
+			cout<<endl<<endl;
+			}
+	}
+	
+	//to delete your acount 
+	void Bank::delete_ac(){
+		if(ch_pass()){
+			re_m(k);
+			de_NF(k+".txt");
+		}
+		else{
+			cout<<"delete failed : \n";
+			cout<<"your name || pass wrong";
+			cout<<endl<<endl;
+		}
+	}
+	
+	// change string to array of ch becuse
+	//function remove 
+	void Bank::re_m(string x){
+		x=x.append(".txt");
+		char ch[x.size()+1];
+		for(int i=0;i<strlen(ch)+4;i++){
+			ch[i]=x[i];
+		}
+		int result=remove(ch);
+		if(result==0){
+			cout<<"succecfuly delete \n";
+		}
+		else
+			cout<<"fiald delete \n";
+	}
+	
+	//view details to user 
+	void Bank::details(){
+		string x; int c=1;
+		if(ch_pass()){
+			ifstream file(k+".txt");
+			while(!file.eof()){
+				getline(file,x);
+				if(c==1){
+				cout<<"name is :"<<x<<endl;
+				}
+				if(c==2){
+				cout<<"passWord is :"<<x<<endl;
+				}
+				if(c==3){
+				cout<<"balance is :"<<x<<endl;	
+				}
+				c++;
+			}				
+		}
+		else{
+			cout<<"view details failed : \n";
+			cout<<"your name || pass wrong";
+			cout<<endl<<endl;
+			}						
+	}
+	// to save all names of clients int file 
+	void Bank::save_NF(string x){
+		ofstream file("admin.txt",ios::app);
+		file<<x+".txt"<<endl;	
+	}
+	
+	
+	void Bank::re_NF(string x,string y){
+		string m; int c=0 , t=0;
+		string h[200];
+		ifstream file("admin.txt");
+		while(!file.eof()){
+			getline(file,h[t]);
+			if(h[t]==x){	
+			h[t]=y;
+			t++;
+			}
+		}
+		ofstream file_2;
+		file_2.open("admin.txt");
+		for(int i=0;i<t;i++){
+			file_2<<h[i]<<endl;			
+		}
+		file_2.close();
+	}
+	
+	void Bank::de_NF(string x){
+		ifstream file("admin.txt");
+		int a=0;
+		string l[100];
+		while(!file.eof()){
+			getline(file,l[a]);
+			if(l[a]==x){
+				l[a]=" ";
+			}
+			a++;			
+		}
+		for(int i=0;i<a;i++){
+			if(l[i]==" "){
+				for(int j=i;j<a;j++){
+					l[j]=l[j+1];
+					}	
+			}
+		}				
+		ofstream file_2("admin.txt");
+		for(int i=0;i<a;i++){
+			cout<<l[i]<<endl;
+			file_2<<l[i]<<endl;	
+		}		
+	}
+	
+	void Bank::read_AD(){
+		string x[200], b; int c=0 , u , g=1;
+		ifstream file("admin.txt");
+		while(!file.eof()){
+			getline(file,x[c++]);		
+		}
+		for(int i=0;i<c-1;i++){
+			cout<<i<<" :"<<x[i]<<endl;
+		}
+		file.close();
+		cout<<"choice to view details claien :";
+		cin>>u;
+		ifstream file2(x[u]);
+		while(!file2.eof()){
+			getline(file2,b);
+			if(g==1){
+				cout<<"name : "<<b<<endl;
+			}
+			if(g==2){
+				cout<<"passWord : "<<b<<endl;
+			}
+			if(g==3){
+				cout<<"balance :"<<b<<endl;	
+			}
+			g++;
+			}
+		}
+	
+	void Bank::creat_admin(){
+		ofstream file("passAdmin.txt");
+		string x , y;
+		x="passAdmin.txt";
+		cout<<"ent pass :";
+		cin>>y;
+		file<<x<<endl;
+		file<<y<<endl;
+		cout<<"succecfull creat \n";
+		file.close();			
+	}	
+	void Bank::ch_admin_pass(){
+		if(admin_pass()){
+			read_AD();	
+		}
+		else{
+			cout<<"faild : \n";
+			cout<<"your name || pass wrong\n";
+		}	
+	}
+	
+	bool Bank::admin_pass(){
+		string x , z[100];
+		int c=0 , d=1;
+		cout<<"inter pass word :";
+		cin>>x;
+		ifstream file("passAdmin.txt");
+		while(!file.eof()){
+			getline(file,z[c]);
+			if(d==2){
+				if(z[c]==x){
+					return true;
+				}
+				else{
+					return false;
+				}	
+			}
+			d++;
+			c++;
+		}				
+	}
+	
+	
+	
+int main()
+{
+	Bank obj;	
+	obj.menu();
+	
+	
+}
